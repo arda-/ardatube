@@ -1,84 +1,116 @@
 <!DOCTYPE html>
 <html>
 
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
+<link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
 
-  <body class="center bg-silver">
+<body class="center bg-silver">
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player" class="v-mid w-100"></div>
 
     <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
 
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-          videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
+            videoId: 'M7lc1UVf-VE',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
         });
-      }
+    }
 
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
         event.target.playVideo();
-      }
+    }
 
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+    function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stop, 60000);
-          done = true;
+            setTimeout(stop, 610000);
+            done = true;
         }
-      }
+    }
 
-      function play() { player.playVideo(); }
-      function pause() { player.pauseVideo(); }
-      function stop() { player.stopVideo(); }
+    function play() { player.playVideo(); }
+    function pause() { player.pauseVideo(); }
+    function stop() { player.stopVideo(); }
 
 
 
-      function togglePlay() {
+    function togglePlay() {
         var state = player.getPlayerState();
         console.log(state==1);
         switch (state) {
-          case 1: // playing
-            console.log("playerState == PLAYING");
+            case 1: // playing
+            showFeedback("pause");
             pause();
             break;
-          case 2: // paused
-            console.log("playerState == PAUSED");
+            case 2: // paused
+            showFeedback("play");
             play();
             break;
-          default:
+            default:
         }
-      }
+    }
 
-      function skip(delta) {
+    function toggleMute() {
+        var muted = player.isMuted();
+        switch (muted) {
+            case true: // playing
+                showFeedback("m = unmute");
+                player.unmute();
+                break;
+            case false: // paused
+                showFeedback("m = mute");
+                player.mute();
+                break;
+            default:
+        }
+    }
+
+
+    function skip(delta) {
         player.seekTo(player.getCurrentTime() + delta, true);
-      }
+    }
 
-      document.onkeydown = function(e) {
+    function showFeedback(message) {
+        element = document.getElementById('feedbackDiv');
+        if (element) removeFeedback();
+        var htmlstr =
+            "<div id='feedbackDiv' class='dib white bg-black-50 sans-serif pa1 br2'>"
+            + message +
+            "</div>";
+        document.body.insertAdjacentHTML('beforeend',htmlstr);
+        setTimeout(removeFeedback, 700);
+    }
+
+    function removeFeedback() {
+        element = document.getElementById('feedbackDiv');
+        document.body.removeChild(element);
+    }
+
+    document.onkeydown = function(e) {
         e = e || window.event;
         var input = e.keyCode || e.which;
 
         var arrow = {
-          left: 37,
-          up: 38,
-          right: 39,
-          down: 40
+            left: 37,
+            up: 38,
+            right: 39,
+            down: 40
         };
 
         // chars
@@ -87,108 +119,108 @@
 
 
         var num = {
-          zero: 48, one: 49, two: 50, three: 51, four: 52,
-          five: 53, six: 54, seven: 55, eight: 56, nine: 57,
+            zero: 48, one: 49, two: 50, three: 51, four: 52,
+            five: 53, six: 54, seven: 55, eight: 56, nine: 57,
         };
 
         var letter = {
-          a: 65, b: 66, c: 67, d: 68, e: 69, f: 70, g: 71,
-          h: 72, i: 73, j: 74, k: 75, l: 76, m: 77, n: 78,
-          o: 79, p: 80, q: 81, r: 82, s: 83, t: 84, u: 85,
-          v: 86, w: 87, x: 88, y: 89, z: 90
+            a: 65, b: 66, c: 67, d: 68, e: 69, f: 70, g: 71,
+            h: 72, i: 73, j: 74, k: 75, l: 76, m: 77, n: 78,
+            o: 79, p: 80, q: 81, r: 82, s: 83, t: 84, u: 85,
+            v: 86, w: 87, x: 88, y: 89, z: 90
         };
 
         switch (input) {
-          // ARROWS
-          case arrow.left:
-            console.log("left");
+            // ARROWS
+            case arrow.left:
+                showFeedback("left");
+                break;
+            case arrow.right:
+                showFeedback("right")
+                break;
+            case arrow.up:
+                showFeedback("up");
             break;
-          case arrow.right:
-            console.log("right");
-            break;
-          case arrow.up:
-            console.log("up");
-            break;
-          case arrow.down:
-            console.log("down");
+                case arrow.down:
+                showFeedback("down");
             break;
 
-          // OTHER CHARS
-          case spacebar:
-            console.log("space");
+            // OTHER CHARS
+            case spacebar:
+            showFeedback("space");
             togglePlay();
             break;
-          case escape:
-            console.log("escape");
+            case escape:
+            showFeedback("escape");
             stop();
             break;
 
-          // NUMBERS
-          case num.zero:
-            console.log("0");
+            // NUMBERS
+            case num.zero:
+            showFeedback("0");
             break;
-          case num.one:
-            console.log("1");
+            case num.one:
+            showFeedback("1");
             break;
-          case num.two:
-            console.log("2");
+            case num.two:
+            showFeedback("2");
             break;
-          case num.three:
-            console.log("3");
+            case num.three:
+            showFeedback("3");
             break;
-          case num.four:
-            console.log("4");
+            case num.four:
+            showFeedback("4");
             break;
-          case num.five:
-            console.log("5");
+            case num.five:
+            showFeedback("5");
             break;
-          case num.six:
-            console.log("6");
+            case num.six:
+            showFeedback("6");
             break;
-          case num.seven:
-            console.log("7");
+            case num.seven:
+            showFeedback("7");
             break;
-          case num.eight:
-            console.log("8");
+            case num.eight:
+            showFeedback("8");
             break;
-          case num.nine:
-            console.log("9");
-            break;
-
-
-          // PLAYBACK CONTROLS
-          case letter.h:
-            console.log("h");
-            console.log("-0:30");
-            skip(-30);
-            break;
-          case letter.j:
-            console.log("j");
-            console.log("-0:10");
-            skip(-10);
-            break;
-          case letter.k:
-            console.log("k");
-            togglePlay();
-            break;
-          case letter.l:
-            console.log("l");
-            console.log("+0:10");
-            skip(10);
-            break;
-          case semicolon:
-            console.log(";");
-            console.log("+0:30");
-            skip(30);
+            case num.nine:
+            showFeedback("9");
             break;
 
 
-          default:
+            // PLAYBACK CONTROLS
+            case letter.h:
+                showFeedback("h = -0:30");
+                skip(-30);
+                break;
+            case letter.j:
+                showFeedback("j = -0:10");
+                skip(-10);
+                break;
+            case letter.k:
+                showFeedback("k = play/pause");
+                togglePlay();
+                break;
+            case letter.l:
+                showFeedback("l = +0:10");
+                skip(10);
+                break;
+            case semicolon:
+                showFeedback("; = +0:30");
+                skip(30);
+                break;
+
+            // VOLUME CONTROLS
+            case letter.m:
+                showFeedback("m = mute")
+
+
+            default:
             console.log(input);
         }
-      }
+    }
 
 
     </script>
-  </body>
+</body>
 </html>
