@@ -3,11 +3,189 @@
 
 <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
 
-<body class="center bg-silver">
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player" class="v-mid w-100"></div>
+<style media="screen">
+
+    #keyboard {
+        max-width: 44rem;
+        display: grid;
+        grid-template-columns: repeat(48, 1fr);
+        grid-template-rows: repeat(5, 3rem);
+        grid-gap: 0.2rem;
+        margin: auto;
+    }
+
+    .key {
+        grid-column: span 4;
+        border-radius: .25rem;
+        text-align: center;
+        /*display: flex;*/
+        /*flex-flow: column;*/
+        /*justify-content: center;*/
+        padding-top: .3rem;
+    }
+
+    .arrowkey {
+        grid-column: span 4;
+    }
+
+
+    #arrowUp {
+        grid-row: 4;
+    }
+
+    #arrowUp, #arrowDown {
+        grid-column: 41 / span 4;
+    }
+
+    #arrowLeft { grid-column: 37 / span 4; }
+    #arrowRight { grid-column: 45 / span 4; }
+
+
+    #q { grid-column: 2 / span 4; }
+    #a { grid-column: 3 / span 4; }
+    #z { grid-column: 4 / span 4; }
+    #question { grid-column: 35 / span 4; }
+
+    #space { grid-column: 12 / span 20;}
+    .row5 { grid-row: 5;}
+    .row5 { grid-row: 5;}
+    .row5 { grid-row: 5;}
+
+    .gridspan3 { grid-column: span 3; }
+
+
+    .desc { font-style: italic; font-weight: 900;}
+
+    .activekey { background-color: rgba(0, 0, 0, 0.2);
+}
+
+</style>
+<body class="center sans-serif bg-near-white" onload="makeAllKeys()">
+
+    <div class="bg-blue">
+        <div id="player"></div>
+    </div>
+
+    <div class="" id="overlay">
+        <p class="f4 avenir tc measure center lh-copy">
+            Here are all the keyboard shortcuts. Hover over one for further information.
+        </p>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">Q :  <i class="fw9">quit video</i>
+            <br>stops the video and disables playback.</p>
+        </div>
+        <div id="keyboard" class="ma2-l">
+            <div class="key pointer grow bg-lightest-blue" id="one">    <div>1</div>    <div class="desc">10%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="two">    <div>2</div>    <div class="desc">20%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="three">  <div>3</div>    <div class="desc">30%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="four">   <div>4</div>    <div class="desc">40%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="five">   <div>5</div>    <div class="desc">50%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="six">    <div>6</div>    <div class="desc">60%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="seven">  <div>7</div>    <div class="desc">70%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="eight">  <div>8</div>    <div class="desc">80%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="nine">   <div>9</div>    <div class="desc">90%</div>    </div>
+            <div class="key pointer grow bg-lightest-blue" id="zero">   <div>0</div>    <div class="desc">0%</div>     </div>
+            <div class="key pointer grow bg-yellow" id="minus">  <div class="desc">–</div>    <div class="desc">vol</div>    </div>
+            <div class="key pointer grow bg-yellow" id="plus">   <div class="desc">+</div>    <div class="desc">vol</div>    </div>
+            <div class="key pointer grow bg-red black" id="q">  <div>Q</div>    <div class="desc">quit</div>    </div>
+            <div class="key pointer grow bg-black-10 ">W</div>
+            <div class="key pointer grow bg-black-10 ">E</div>
+            <div class="key pointer grow bg-black-10" id="r">  <div>R</div>    <div class="desc"></div>    </div>
+            <div class="key pointer grow bg-black-10 ">T</div>
+            <div class="key pointer grow bg-black-10 ">Y</div>
+            <div class="key pointer grow bg-black-10 ">U</div>
+            <div class="key pointer grow bg-black-10 ">I</div>
+            <div class="key pointer grow bg-black-10 ">O</div>
+            <div class="key pointer grow bg-black-10 ">P</div>
+            <div class="key pointer grow bg-black-10 gridspan3">[</div>
+            <div class="key pointer grow bg-black-10 gridspan3">]</div>
+            <div class="key pointer grow bg-black-10 " id="a">A</div>
+            <div class="key pointer grow bg-light-green" id="s">  <div>S</div>    <div class="desc">src</div>    </div>
+
+            <div class="key pointer grow bg-black-10 ">D</div>
+            <div class="key pointer grow bg-light-pink" id="f">   <div>F</div>    <div class="desc">full</div>     </div>
+            <div class="key pointer grow bg-black-10 ">G</div>
+            <div class="key pointer grow bg-lightest-blue" id="h">   <div>H</div>    <div class="desc">-30s</div>     </div>
+            <div class="key pointer grow bg-lightest-blue" id="j">   <div>J</div>    <div class="desc">-10s</div>     </div>
+            <div class="key pointer grow bg-light-blue" id="k">   <div>K</div>    <div class="fw9">►/ ❙❙</div>     </div>
+            <div class="key pointer grow bg-lightest-blue" id="l">   <div>L</div>    <div class="desc">+10s</div>     </div>
+            <div class="key pointer grow bg-lightest-blue" id="semicolon">   <div>;</div>    <div class="desc">+30s</div>     </div>
+            <div class="key pointer grow bg-black-10 ">'</div>
+            <div class="key pointer grow bg-black-10 " id="z">Z</div>
+            <div class="key pointer grow bg-black-10 ">X</div>
+            <div class="key pointer grow bg-black-10 ">C</div>
+            <div class="key pointer grow bg-black-10 ">V</div>
+            <div class="key pointer grow bg-light-purple" id="b">  <div>B</div>    <div class="desc">prev</div>    </div>
+            <div class="key pointer grow bg-light-purple" id="n">  <div>N</div>    <div class="desc">next</div>    </div>
+            <div class="key pointer grow bg-yellow" id="m">   <div>M</div>    <div class="desc">mute</div>     </div>
+            <div class="key pointer grow bg-orange" id="question">   <div>?</div>    <div class="desc">help</div>     </div>
+            <div class="key pointer grow bg-light-pink arrowkey" id="arrowUp">     <div>▲</div>    <div class="desc">qual</div> </div>
+            <div class="key pointer grow bg-light-blue  row5" id="space">   <div>space</div>    <div class="fw9">►/ ❙❙</div>    </div>
+            <div class="key pointer grow bg-light-blue  row5 arrowkey" id="arrowLeft">   <div>◄</div>    <div class="desc">slow</div> </div>
+            <div class="key pointer grow bg-light-pink  row5 arrowkey" id="arrowDown">   <div>▼</div>    <div class="desc">qual</div> </div>
+            <div class="key pointer grow bg-light-blue  row5 arrowkey" id="arrowRight">  <div>►</div>    <div class="desc">ffw</div> </div>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">S :  <i class="fw9">source</i>
+            <br>redirect to the original video</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">? :  <i class="fw9">help toggle</i>
+            <br>opens and closes this overlay.</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">F :  <i class="fw9">fullscreen toggle</i>
+            <br>*crickets chirping*</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">M :  <i class="fw9">mute toggle</i>
+            <br>*crickets chirping*
+            <br>*no more crikets chirping*
+            <br>*crickets chirping*</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">B :  <i class="fw9">previous video</i>
+            <br>if you've added videos to the ardatube queue, skip to the previous video in the queue.</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">N :  <i class="fw9">next video</i>
+            <br>if you've added videos to the ardatube queue, skip to the next video in the queue.</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">▲ :  <i class="fw9">quality up</i>
+                <br>if possible, increase the resolution of the video</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">▼ :  <i class="fw9">quality down</i>
+            <br>if possible, decrease the resolution of the video</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">◄ :  <i class="fw9">slow down</i>
+                <br>if possible, slow the playback speed of the video</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy">► :  <i class="fw9">fast forward</i>
+            <br>if possible, increase the playback of the video</p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy"><span class="f4 b">+</span> :  <i class="fw9">volume up</i>
+                <br><i class="fw3">*crickets chirping*</i>
+                <br><i class="f4">*crickets chirping*</i>
+                <br><i class="f3 fw5">*crickets chirping*</i>
+            </p>
+        </div>
+        <div class="sans-serif measure-narrow center">
+            <p class="lh-copy"><span class="f4 b">–</span class="fw9"> :  <i class="fw9">volume down</i>
+                <br><i class="f4 fw5">*crickets chirping*</i>
+                <br><i class="f5">*crickets chirping*</i>
+                <br><i class="f6 fw3">*crickets chirping*</i>
+            </p>
+        </div>
+    </div>
+
 
     <script>
+
     // 2. This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
 
@@ -21,6 +199,8 @@
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
             videoId: 'M7lc1UVf-VE',
+            height: '300',
+            width: '400',
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -44,39 +224,19 @@
         }
     }
 
-    function play() { player.playVideo(); }
-    function pause() { player.pauseVideo(); }
-    function stop() { player.stopVideo(); }
-
-
-
+    // ==== playback functions ====
     function togglePlay() {
         var state = player.getPlayerState();
         console.log(state==1);
         switch (state) {
             case 1: // playing
             showFeedback("pause");
-            pause();
+            player.pauseVideo();
             break;
             case 2: // paused
             showFeedback("play");
-            play();
+            player.playVideo();
             break;
-            default:
-        }
-    }
-
-    function toggleMute() {
-        var muted = player.isMuted();
-        switch (muted) {
-            case true: // playing
-                showFeedback("m = unmute");
-                player.unmute();
-                break;
-            case false: // paused
-                showFeedback("m = mute");
-                player.mute();
-                break;
             default:
         }
     }
@@ -84,8 +244,148 @@
 
     function skip(delta) {
         player.seekTo(player.getCurrentTime() + delta, true);
+        showFeedback("skip " + delta + " s");
     }
 
+    function skipTo(intFromZeroToTen) {
+        player.seekTo(intFromZeroToTen * (player.getDuration() / 10));
+        showFeedback("skip to " + intFromZeroToTen + "/10 of video");
+    }
+
+    function speedUp() {
+        var rates = player.getAvailablePlaybackRates();
+        if ( rates.length > 1) {
+            var currentSpeed = player.getPlaybackRate();
+            var currentSpeedIndex = rates.indexOf(currentSpeed);
+
+            var maxSpeedIndex = rates.length - 1;
+            if (currentSpeedIndex != maxSpeedIndex) {
+                var newPlaybackRate = rates[currentSpeedIndex + 1];
+                player.setPlaybackRate(newPlaybackRate);
+                showFeedback("speed: " + newPlaybackRate + "x");
+            } else {
+                showFeedback("can't go faster than speed: " + currentSpeed + "x");
+            }
+
+
+        } else {
+            showFeedback("video does not allow ffw");
+        }
+    }
+
+    function slowDown() {
+        var rates = player.getAvailablePlaybackRates();
+        if ( rates.length > 1) {
+            var currentSpeed = player.getPlaybackRate();
+            var currentSpeedIndex = rates.indexOf(currentSpeed);
+
+            var maxSpeedIndex = rates.length - 1;
+            if (currentSpeedIndex != 0) {
+                var newPlaybackRate = rates[currentSpeedIndex - 1];
+                player.setPlaybackRate(newPlaybackRate);
+                showFeedback("speed: " + newPlaybackRate + "x");
+            } else {
+                showFeedback("can't go slower than speed: " + currentSpeed + "x");
+            }
+
+
+        } else {
+            showFeedback("video does not allow slow playback");
+        }
+    }
+
+    // ==== volume functions ====
+    function toggleMute() {
+        switch (player.isMuted()) {
+            case true: // playing
+                showFeedback("m = unmute");
+                player.unMute();
+                break;
+            case false: // paused
+                showFeedback("m = mute");
+                player.mute();
+                player.setVolume(0);
+                break;
+            default:
+        }
+    }
+
+    function volumeUp() {
+        if (player.isMuted()) {
+            player.unMute();
+            player.setVolume(20);
+            showFeedback("Vol = 20");
+            return;
+        }
+
+        var vol = player.getVolume();
+        if ( vol < 100) {
+            vol += 20;
+            player.setVolume(vol);
+        }
+        showFeedback("Vol = " + vol);
+    }
+
+    function volumeDown() {
+        if (player.isMuted()) {
+            showFeedback("Vol = 0");
+            return;
+        }
+
+        var vol = player.getVolume();
+        if ( vol > 0) {
+            vol -= 20;
+            player.setVolume(vol);
+        }
+        showFeedback("Vol = " + vol);
+    }
+
+
+
+    // ==== quality functions ====
+    function qualityUp() {
+        var qualities = player.getAvailableQualityLevels();
+        if ( qualities.length > 1) {
+            var curQual = player.getPlaybackQuality();
+            var curQualIndex = qualities.indexOf(curQual);
+
+            if (curQualIndex != 0) {
+                var newQual = qualities[curQualIndex - 1];
+                player.setPlaybackQuality(newQual);
+                showFeedback("vid quality: " + newQual);
+            } else {
+                showFeedback("no higher quality than: " + curQual);
+            }
+
+
+        } else {
+            showFeedback("this is the only video quality available");
+        }
+    }
+
+    function qualityDown() {
+        var qualities = player.getAvailableQualityLevels();
+        if ( qualities.length > 1) {
+            var curQual = player.getPlaybackQuality();
+            var curQualIndex = qualities.indexOf(curQual);
+            var minQualIndex = qualities.length - 2;
+
+            if (curQualIndex != minQualIndex) {
+                var newQual = qualities[curQualIndex + 1];
+                player.setPlaybackQuality(newQual);
+                showFeedback("vid quality: " + newQual);
+            } else {
+                showFeedback("no lower quality than: " + curQual);
+            }
+
+
+        } else {
+            showFeedback("this is the only video quality available");
+        }
+    }
+
+
+    // ==== helper functions ====
     function showFeedback(message) {
         element = document.getElementById('feedbackDiv');
         if (element) removeFeedback();
@@ -116,7 +416,9 @@
         // chars
         var spacebar = 32;
         var semicolon = 186;
-
+        var plus = 187;
+        var minus = 189;
+        var quesslash = 191;
 
         var num = {
             zero: 48, one: 49, two: 50, three: 51, four: 52,
@@ -131,95 +433,108 @@
         };
 
         switch (input) {
-            // ARROWS
-            case arrow.left:
-                showFeedback("left");
-                break;
-            case arrow.right:
-                showFeedback("right")
-                break;
-            case arrow.up:
-                showFeedback("up");
-            break;
-                case arrow.down:
-                showFeedback("down");
-            break;
 
             // OTHER CHARS
             case spacebar:
-            showFeedback("space");
-            togglePlay();
-            break;
-            case escape:
-            showFeedback("escape");
-            stop();
-            break;
+                togglePlay();
+                break;
+            case q:
+                showFeedback("escape");
+                player.stopVideo();
+                break;
+            case quesslash:
+                // toggle keyboard overlay with help info
+                break;
+
+
 
             // NUMBERS
             case num.zero:
-            showFeedback("0");
-            break;
+                skipTo(0);
+                break;
             case num.one:
-            showFeedback("1");
-            break;
+                skipTo(1);
+                break;
             case num.two:
-            showFeedback("2");
-            break;
+                skipTo(2);
+                break;
             case num.three:
-            showFeedback("3");
-            break;
+                skipTo(3);
+                break;
             case num.four:
-            showFeedback("4");
-            break;
+                skipTo(4);
+                break;
             case num.five:
-            showFeedback("5");
-            break;
+                skipTo(5);
+                break;
             case num.six:
-            showFeedback("6");
-            break;
+                skipTo(6);
+                break;
             case num.seven:
-            showFeedback("7");
-            break;
+                skipTo(7);
+                break;
             case num.eight:
-            showFeedback("8");
-            break;
+                skipTo(8);
+                break;
             case num.nine:
-            showFeedback("9");
-            break;
+                skipTo(9);
+                break;
 
 
             // PLAYBACK CONTROLS
             case letter.h:
-                showFeedback("h = -0:30");
                 skip(-30);
                 break;
             case letter.j:
-                showFeedback("j = -0:10");
                 skip(-10);
                 break;
             case letter.k:
-                showFeedback("k = play/pause");
                 togglePlay();
                 break;
             case letter.l:
-                showFeedback("l = +0:10");
                 skip(10);
                 break;
             case semicolon:
-                showFeedback("; = +0:30");
                 skip(30);
                 break;
+
+            case arrow.left:
+                slowDown();
+                break;
+            case arrow.right:
+                speedUp();
+                break;
+
+
 
             // VOLUME CONTROLS
             case letter.m:
                 showFeedback("m = mute")
+                toggleMute();
+                break;
+            case arrow.up:
+                volumeUp();
+                break;
+            case arrow.down:
+                volumeDown();
+                break;
+
+
+
+            // QUALITY CONTROL
+            case plus:
+                qualityUp();
+                break;
+
+            case minus:
+                qualityDown();
+                break;
 
 
             default:
-            console.log(input);
+                console.log(input);
         }
     }
-
 
     </script>
 </body>
