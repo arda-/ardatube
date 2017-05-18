@@ -12,11 +12,8 @@ v0.1 – WIP
 - front end probably vanilla js/css etc.
 
 ## roadmap
-### v0.1
-- make front-end in html/css/js control basic features
-
-###
-- back-end webserver
+### v0.1: make front-end in html/css/js control basic features
+### v0.2: back-end webserver + routing
 
 ### backlog
 - get video stats etc
