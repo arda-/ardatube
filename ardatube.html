@@ -24,29 +24,30 @@
         padding-top: .3rem;
     }
 
+
     .arrowkey {
         grid-column: span 4;
     }
 
 
-    #arrowUp {
+    #ArrowUp {
         grid-row: 4;
     }
 
-    #arrowUp, #arrowDown {
+    #ArrowUp, #ArrowDown {
         grid-column: 41 / span 4;
     }
 
-    #arrowLeft { grid-column: 37 / span 4; }
-    #arrowRight { grid-column: 45 / span 4; }
+    #ArrowLeft { grid-column: 37 / span 4; }
+    #ArrowRight { grid-column: 45 / span 4; }
 
 
-    #q { grid-column: 2 / span 4; }
-    #a { grid-column: 3 / span 4; }
-    #z { grid-column: 4 / span 4; }
-    #question { grid-column: 35 / span 4; }
+    #KeyQ { grid-column: 2 / span 4; }
+    #KeyA { grid-column: 3 / span 4; }
+    #KeyZ { grid-column: 4 / span 4; }
+    #Slash { grid-column: 35 / span 4; }
 
-    #space { grid-column: 12 / span 20;}
+    #Space { grid-column: 12 / span 20;}
     .row5 { grid-row: 5;}
     .row5 { grid-row: 5;}
     .row5 { grid-row: 5;}
@@ -56,133 +57,248 @@
 
     .desc { font-style: italic; font-weight: 900;}
 
-    .activekey { background-color: rgba(0, 0, 0, 0.2);
+    .activekey {
+        transition: all 0.07s ease-in-out;
+    }
+
+    .activekey:hover {
+        transform: scale(1.2);
+        box-shadow: 0 .2rem .25rem rgba(0,0,0,0.1);
+    }
+    .activekey:active {
+        transform: scale(1.1);
+        box-shadow: 0 .2rem .25rem rgba(0,0,0,0.2);
+    }
+
+    .keydown {
+        transition: 0s !important;
+        transform: scale(1) !important;
+        box-shadow: inset 0 .1rem .3rem rgba(0,0,0,0.3) !important;
+    }
 }
 
 </style>
-<body class="center sans-serif bg-near-white" onload="makeAllKeys()">
+<body class="center sans-serif bg-near-white" onload="">
+
 
     <div class="bg-blue">
         <div id="player"></div>
     </div>
 
     <div class="" id="overlay">
-        <p class="f4 avenir tc measure center lh-copy">
-            Here are all the keyboard shortcuts. Hover over one for further information.
-        </p>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">Q :  <i class="fw9">quit video</i>
-            <br>stops the video and disables playback.</p>
+        <div id="keyInfoBox" class="sans-serif measure h4 center">
+            <h3 class="fw4 avenir measure tc">Here are the available keyboard shortcuts. Hover over a key for an explanation. Click on one to see it in action.</h3>
         </div>
+
         <div id="keyboard" class="ma2-l">
-            <div class="key pointer grow bg-lightest-blue" id="one">    <div>1</div>    <div class="desc">10%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="two">    <div>2</div>    <div class="desc">20%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="three">  <div>3</div>    <div class="desc">30%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="four">   <div>4</div>    <div class="desc">40%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="five">   <div>5</div>    <div class="desc">50%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="six">    <div>6</div>    <div class="desc">60%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="seven">  <div>7</div>    <div class="desc">70%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="eight">  <div>8</div>    <div class="desc">80%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="nine">   <div>9</div>    <div class="desc">90%</div>    </div>
-            <div class="key pointer grow bg-lightest-blue" id="zero">   <div>0</div>    <div class="desc">0%</div>     </div>
-            <div class="key pointer grow bg-yellow" id="minus">  <div class="desc">–</div>    <div class="desc">vol</div>    </div>
-            <div class="key pointer grow bg-yellow" id="plus">   <div class="desc">+</div>    <div class="desc">vol</div>    </div>
-            <div class="key pointer grow bg-red black" id="q">  <div>Q</div>    <div class="desc">quit</div>    </div>
-            <div class="key pointer grow bg-black-10 ">W</div>
-            <div class="key pointer grow bg-black-10 ">E</div>
-            <div class="key pointer grow bg-black-10" id="r">  <div>R</div>    <div class="desc"></div>    </div>
-            <div class="key pointer grow bg-black-10 ">T</div>
-            <div class="key pointer grow bg-black-10 ">Y</div>
-            <div class="key pointer grow bg-black-10 ">U</div>
-            <div class="key pointer grow bg-black-10 ">I</div>
-            <div class="key pointer grow bg-black-10 ">O</div>
-            <div class="key pointer grow bg-black-10 ">P</div>
-            <div class="key pointer grow bg-black-10 gridspan3">[</div>
-            <div class="key pointer grow bg-black-10 gridspan3">]</div>
-            <div class="key pointer grow bg-black-10 " id="a">A</div>
-            <div class="key pointer grow bg-light-green" id="s">  <div>S</div>    <div class="desc">src</div>    </div>
+            <div    id="Digit1"
+                    class="key activekey pointer bg-lightest-blue">
+                <div>1</div>
+                <div class="desc">10%</div>
+            </div>
+            <div    id="Digit2"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(2)"
+                    >
+                <div>2</div>
+                <div class="desc">20%</div>
+            </div>
+            <div    id="Digit3"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(3)"
+                    >
+                <div>3</div>
+                <div class="desc">30%</div>
+            </div>
+            <div    id="Digit4"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(4)"
+                    >
+                <div>4</div>
+                <div class="desc">40%</div>
+            </div>
+            <div    id="Digit5"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(5)"
+                    >
+                <div>5</div>
+                <div class="desc">50%</div>
+            </div>
+            <div    id="Digit6"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(6)"
+                    >
+                <div>6</div>
+                <div class="desc">60%</div>
+            </div>
+            <div    id="Digit7"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(7)"
+                    >
+                <div>7</div>
+                <div class="desc">70%</div>
+            </div>
+            <div    id="Digit8"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(8)"
+                    >
+                <div>8</div>
+                <div class="desc">80%</div>
+            </div>
+            <div    id="Digit9"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(9)"
+                    >
+                <div>9</div>
+                <div class="desc">90%</div>
+            </div>
+            <div    id="Digit0"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skipTo(0)"
+                    >
+                <div>0</div>
+                <div class="desc">0%</div>
+            </div>
+            <div    id="Minus"
+                    class="key activekey pointer bg-yellow"
+                    onclick="volumeUp()"
+                    >
+                <div class="desc">–</div>
+                <div class="desc">vol</div>
+            </div>
+            <div    id="Equal"
+                    class="key activekey pointer bg-yellow"
+                    onclick="volumeDown()">
+                <div class="desc">+</div>
+                <div class="desc">vol</div>
+            </div>
+            <div    id="KeyQ"
+                    class="key activekey pointer bg-red black"
+                    onclick="">
+                <div>Q</div>
+                <div class="desc">quit</div>
+            </div>
+            <div id="KeyW" class="key bg-black-10 ">W</div>
+            <div id="KeyE" class="key bg-black-10 ">E</div>
+            <div id="KeyR" class="key bg-black-10 ">R</div>
+            <div id="KeyT" class="key bg-black-10 ">T</div>
+            <div id="KeyY" class="key bg-black-10 ">Y</div>
+            <div id="KeyU" class="key bg-black-10 ">U</div>
+            <div id="KeyI" class="key bg-black-10 ">I</div>
+            <div id="KeyO" class="key bg-black-10 ">O</div>
+            <div id="KeyP" class="key bg-black-10 ">P</div>
+            <div id="BracketLeft" class="key bg-black-10 gridspan3">[</div>
+            <div id="BracketRight" class="key bg-black-10 gridspan3">]</div>
+            <div id="KeyA" class="key bg-black-10 ">A</div>
 
-            <div class="key pointer grow bg-black-10 ">D</div>
-            <div class="key pointer grow bg-light-pink" id="f">   <div>F</div>    <div class="desc">full</div>     </div>
-            <div class="key pointer grow bg-black-10 ">G</div>
-            <div class="key pointer grow bg-lightest-blue" id="h">   <div>H</div>    <div class="desc">-30s</div>     </div>
-            <div class="key pointer grow bg-lightest-blue" id="j">   <div>J</div>    <div class="desc">-10s</div>     </div>
-            <div class="key pointer grow bg-light-blue" id="k">   <div>K</div>    <div class="fw9">►/ ❙❙</div>     </div>
-            <div class="key pointer grow bg-lightest-blue" id="l">   <div>L</div>    <div class="desc">+10s</div>     </div>
-            <div class="key pointer grow bg-lightest-blue" id="semicolon">   <div>;</div>    <div class="desc">+30s</div>     </div>
-            <div class="key pointer grow bg-black-10 ">'</div>
-            <div class="key pointer grow bg-black-10 " id="z">Z</div>
-            <div class="key pointer grow bg-black-10 ">X</div>
-            <div class="key pointer grow bg-black-10 ">C</div>
-            <div class="key pointer grow bg-black-10 ">V</div>
-            <div class="key pointer grow bg-light-purple" id="b">  <div>B</div>    <div class="desc">prev</div>    </div>
-            <div class="key pointer grow bg-light-purple" id="n">  <div>N</div>    <div class="desc">next</div>    </div>
-            <div class="key pointer grow bg-yellow" id="m">   <div>M</div>    <div class="desc">mute</div>     </div>
-            <div class="key pointer grow bg-orange" id="question">   <div>?</div>    <div class="desc">help</div>     </div>
-            <div class="key pointer grow bg-light-pink arrowkey" id="arrowUp">     <div>▲</div>    <div class="desc">qual</div> </div>
-            <div class="key pointer grow bg-light-blue  row5" id="space">   <div>space</div>    <div class="fw9">►/ ❙❙</div>    </div>
-            <div class="key pointer grow bg-light-blue  row5 arrowkey" id="arrowLeft">   <div>◄</div>    <div class="desc">slow</div> </div>
-            <div class="key pointer grow bg-light-pink  row5 arrowkey" id="arrowDown">   <div>▼</div>    <div class="desc">qual</div> </div>
-            <div class="key pointer grow bg-light-blue  row5 arrowkey" id="arrowRight">  <div>►</div>    <div class="desc">ffw</div> </div>
+            <div    id="KeyS"
+                    class="key activekey pointer bg-light-green"
+                    onclick="">
+                <div>S</div>
+                <div class="desc">src</div>
+            </div>
+            <div id="KeyD" class="key bg-black-10 ">D</div>
+            <div    id="KeyF"
+                    class="key activekey pointer bg-light-pink"
+                    onclick="">
+                <div>F</div>
+                <div class="desc">full</div>
+            </div>
+            <div class="key pointer bg-black-10 ">G</div>
+            <div    id="KeyH"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skip(-30)"
+                    >
+                <div>H</div>
+                <div class="desc">-30s</div>
+            </div>
+            <div    id="KeyJ"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skip(-10)">
+                <div>J</div>
+                <div class="desc">-10s</div>
+            </div>
+            <div    id="KeyK"
+                    class="key activekey pointer bg-light-blue"
+                    onclick="togglePlay()">
+                <div>K</div>
+                <div class="fw9">&#9654;/ &#x2759;&#x2759;</div>
+                </div>
+            <div    id="KeyL"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skip(10)">
+                <div>L</div>
+                <div class="desc">+10s</div>
+            </div>
+            <div    id="Semicolon"
+                    class="key activekey pointer bg-lightest-blue"
+                    onclick="skip(30)">
+                <div>;</div>
+                <div class="desc">+30s</div>
+            </div>
+            <div id="Quote" class="key pointer bg-black-10 ">'</div>
+            <div id="KeyZ" class="key pointer bg-black-10 ">Z</div>
+            <div id="KeyX" class="key pointer bg-black-10 ">X</div>
+            <div id="KeyC" class="key pointer bg-black-10 ">C</div>
+            <div id="KeyV" class="key pointer bg-black-10 ">V</div>
+            <div    id="KeyB"
+                    class="key activekey pointer bg-light-purple"
+                    onclick="">
+                <div>B</div>
+                <div class="desc">prev</div>
+            </div>
+            <div    id="KeyN"
+                    class="key activekey pointer bg-light-purple"
+                    onclick="">
+                <div>N</div>
+                <div class="desc">next</div>
+            </div>
+            <div    id="KeyM"
+                    class="key activekey pointer bg-yellow"
+                    onclick="toggleMute()"
+                    >
+                <div>M</div>
+                <div class="desc">mute</div>
+            </div>
+            <div    id="Slash"
+                    class="key activekey pointer bg-orange"
+                    onclick="">
+                <div>?</div>
+                <div class="desc">help</div>
+            </div>
+            <div    id="ArrowUp"
+                    class="key activekey pointer bg-light-pink arrowkey"
+                    onclick="qualityUp()">
+                <div>&#9650;</div>
+                <div class="desc">qual</div>
+            </div>
+            <div    id="Space"
+                    class="key activekey pointer bg-light-blue row5">
+                <div>space</div>
+                <div class="fw9">&#9654;/ &#x2759;&#x2759;</div>
+            </div>
+            <div    id="ArrowLeft"
+                    class="key activekey pointer bg-light-blue row5 arrowkey"
+                    onclick="slowDown()"
+                    >
+                <div>&#9664;</div>
+                <div class="desc">slow</div>
+            </div>
+            <div    id="ArrowDown"
+                    class="key activekey pointer bg-light-pink row5 arrowkey"
+                    onclick="qualityDown()"
+                    >
+                <div>&#9660;</div>
+                <div class="desc">qual</div>
+            </div>
+            <div    id="ArrowRight"
+                    class="key activekey pointer bg-light-blue row5 arrowkey"
+                    onclick="speedUp()"
+                    >
+                <div>&#9654;</div>
+                <div class="desc">ffw</div>
+            </div>
         </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">S :  <i class="fw9">source</i>
-            <br>redirect to the original video</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">? :  <i class="fw9">help toggle</i>
-            <br>opens and closes this overlay.</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">F :  <i class="fw9">fullscreen toggle</i>
-            <br>*crickets chirping*</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">M :  <i class="fw9">mute toggle</i>
-            <br>*crickets chirping*
-            <br>*no more crikets chirping*
-            <br>*crickets chirping*</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">B :  <i class="fw9">previous video</i>
-            <br>if you've added videos to the ardatube queue, skip to the previous video in the queue.</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">N :  <i class="fw9">next video</i>
-            <br>if you've added videos to the ardatube queue, skip to the next video in the queue.</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">▲ :  <i class="fw9">quality up</i>
-                <br>if possible, increase the resolution of the video</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">▼ :  <i class="fw9">quality down</i>
-            <br>if possible, decrease the resolution of the video</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">◄ :  <i class="fw9">slow down</i>
-                <br>if possible, slow the playback speed of the video</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy">► :  <i class="fw9">fast forward</i>
-            <br>if possible, increase the playback of the video</p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy"><span class="f4 b">+</span> :  <i class="fw9">volume up</i>
-                <br><i class="fw3">*crickets chirping*</i>
-                <br><i class="f4">*crickets chirping*</i>
-                <br><i class="f3 fw5">*crickets chirping*</i>
-            </p>
-        </div>
-        <div class="sans-serif measure-narrow center">
-            <p class="lh-copy"><span class="f4 b">–</span class="fw9"> :  <i class="fw9">volume down</i>
-                <br><i class="f4 fw5">*crickets chirping*</i>
-                <br><i class="f5">*crickets chirping*</i>
-                <br><i class="f6 fw3">*crickets chirping*</i>
-            </p>
-        </div>
-    </div>
-
 
     <script>
 
@@ -210,7 +326,7 @@
 
     // 4. The API will call this function when the video player is ready.
     function onPlayerReady(event) {
-        event.target.playVideo();
+        // event.target.playVideo();
     }
 
     // 5. The API calls this function when the player's state changes.
@@ -240,7 +356,6 @@
             default:
         }
     }
-
 
     function skip(delta) {
         player.seekTo(player.getCurrentTime() + delta, true);
@@ -384,6 +499,43 @@
         }
     }
 
+    // ==== OTHER FUNCTIONS
+
+    function showKeyInfo(key) {
+        var entry = activeKeyMap[key]
+        if (entry == undefined) {
+            console.log("couldn't find "+key+" in activeKeyMap.")
+        } else {
+            renderKeyInfoBlurb(entry.char, entry.name, entry.blurb);
+        }
+    }
+
+    function renderKeyInfoBlurb(key, name, blurb) {
+        element = document.getElementById('keyInfoBox');
+        previousBlurb = document.getElementById('keyInfoContent');
+        if (previousBlurb != undefined) removeKeyInfo();
+
+        if (key == "K" || key == "space") {
+            var htmlstr =
+                '<p class="lh-copy measure center" id="keyInfoContent">'
+                + key + ' :  <span class="fw9">'
+                + name + '</span><br>'
+                + blurb + '</p></div>';
+        } else {
+            var htmlstr =
+                '<p class="lh-copy measure center" id="keyInfoContent">'
+                + key + ' :  <i class="fw9">'
+                + name + '</i><br>'
+                + blurb + '</p></div>';
+        }
+        element.insertAdjacentHTML('beforeend',htmlstr);
+    }
+
+    function removeKeyInfo() {
+        keyInfoBox = document.getElementById('keyInfoBox');
+        keyInfoContent = document.getElementById('keyInfoContent');
+        keyInfoBox.removeChild(keyInfoContent);
+    }
 
     // ==== helper functions ====
     function showFeedback(message) {
@@ -396,11 +548,300 @@
         document.body.insertAdjacentHTML('beforeend',htmlstr);
         setTimeout(removeFeedback, 700);
     }
-
     function removeFeedback() {
         element = document.getElementById('feedbackDiv');
         document.body.removeChild(element);
     }
+
+    var activeKeyMap = {
+        'Digit1': {
+            'char': "1",
+            'name':  "10%",
+            'blurb': "skip to 10% in the video.",
+        },
+        'Digit2': {
+            'char': "2",
+            'name':  "20%",
+            'blurb': "skip to 20% in the video.",
+        },
+        'Digit3': {
+            'char': "3",
+            'name':  "30%",
+            'blurb': "skip to 30% in the video.",
+        },
+        'Digit4': {
+            'char': "4",
+            'name':  "40%",
+            'blurb': "skip to 40% in the video.",
+        },
+        'Digit5': {
+            'char': "5",
+            'name':  "50%",
+            'blurb': "skip to 50% in the video.",
+        },
+        'Digit6': {
+            'char': "6",
+            'name':  "60%",
+            'blurb': "skip to 60% in the video.",
+        },
+        'Digit7': {
+            'char': "7",
+            'name':  "70%",
+            'blurb': "skip to 70% in the video.",
+        },
+        'Digit8': {
+            'char': "8",
+            'name':  "80%",
+            'blurb': "skip to 80% in the video.",
+        },
+        'Digit9': {
+            'char': "9",
+            'name':  "90%",
+            'blurb': "skip to 90% in the video.",
+        },
+        'Digit0': {
+            'char': "0",
+            'name':  "0%",
+            'blurb': "skip to beginning (seek to 0% in the video).",
+        },
+        'Minus': {
+            'char': "<b>&#x2013;</b>",
+            'name':  "volume down",
+            'blurb': "decrease volume by 20%",
+        },
+        'Equal': {
+            'char': "<b>+</b>",
+            'name':  "volume up",
+            'blurb': "increase volume by 20%",
+        },
+        'KeyQ': {
+            'char': "Q",
+            'name':  "quit video",
+            'blurb': "stops the video and disables playback.",
+        },
+        'KeyS': {
+            'char': "S",
+            'name':  "source",
+            'blurb': "redirect to the original video.",
+        },
+        'KeyF': {
+            'char': "F",
+            'name':  "fulscreen toggle",
+            'blurb': "enter or exit fullscreen mode.",
+        },
+        'KeyH': {
+            'char': "H",
+            'name':  "-30s",
+            'blurb': "seek back 30 seconds in the video, if possible.",
+        },
+        'KeyJ': {
+            'char': "J",
+            'name':  "-10s",
+            'blurb': "seek back 10 seconds in the video, if possible.",
+        },
+        'KeyK': {
+            'char': "K",
+            'name':  "&#9654;/ &#x2759;&#x2759;",
+            'blurb': "toggle playback of video.",
+        },
+        'KeyL': {
+            'char': "L",
+            'name':  "+10s",
+            'blurb': "seek back 10 seconds in the video, if possible.",
+        },
+        "Semicolon": {
+            'char': "<b>;</b>",
+            'name':  "+30s",
+            'blurb': "seek back 30 seconds in the video, if possible.",
+        },
+        'KeyB': {
+            'char': "B",
+            'name':  "previous video",
+            'blurb': "if you've added videos to the ardatube queue, skip to the previous video in the KeyB.",
+
+        },
+        'KeyN': {
+            'char': "N",
+            'name':  "next video",
+            'blurb': "if you've added videos to the ardatube queue, skip to the next video in the queue.",
+        },
+        'KeyM': {
+            'char': "M",
+            'name':  "mute toggle",
+            'blurb': "mute or unmute the volume.",
+        },
+        'Slash': {
+            'char': '?',
+            'name':  "help toggle",
+            'blurb': "mute or unmute the volume.",
+        },
+        "ArrowUp": {
+            'char': "&#9650;",
+            'name':  "quality up",
+            'blurb': "increase the resolution of the video, if available.",
+        },
+        "ArrowDown": {
+            'char': "&#9660;",
+            'name':  "quality down",
+            'blurb': "decrease the resolution of the video, if available.",
+        },
+        "Space": {
+            'char': "space",
+            'name':  "&#9654;/ &#x2759;&#x2759;",
+            'blurb': "toggle playback of video.",
+        },
+        "ArrowLeft": {
+            'char': "&#9664;",
+            'name': "slow down",
+            'blurb': "slow the playback speed of the video, if possible.",
+        },
+        "ArrowRight": {
+            'char': "&#9664;",
+            'name': "fast forward",
+            'blurb': "slow the playback speed of the video, if possible.",
+        }
+    }
+
+    var allKeyArray = [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0",
+        "Minus",
+        "Equal", //plus
+        "KeyQ",
+        "KeyW",
+        "KeyE",
+        "KeyR",
+        "KeyT",
+        "KeyY",
+        "KeyU",
+        "KeyI",
+        "KeyO",
+        "KeyP",
+        "KeyBracketLeft",
+        "KeyBracketRight",
+        "KeyA",
+        "KeyS",
+        "KeyD",
+        "KeyF",
+        "KeyG",
+        "KeyH",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "Semicolon",
+        "Quote",
+        "KeyZ",
+        "KeyX",
+        "KeyC",
+        "KeyV",
+        "KeyB",
+        "KeyN",
+        "KeyM",
+        "Slash", //question
+        "Space",
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+    ]
+
+
+    var activeKeyArray = [
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Digit6",
+        "Digit7",
+        "Digit8",
+        "Digit9",
+        "Digit0",
+        "Minus",
+        "Equal", //plus
+        "KeyQ",
+        // mind the gap
+        "KeyS",
+        //
+        "KeyF",
+        //
+        "KeyH",
+        "KeyJ",
+        "KeyK",
+        "KeyL",
+        "Semicolon",
+        // mind the gap
+        "KeyB",
+        "KeyN",
+        "KeyM",
+        "Slash", //question
+        "Space",
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+    ]
+
+    var DEBUG = true;
+    function debugPrint(x) {
+        if (DEBUG) console.log(x);
+    }
+
+    window.addEventListener("load", init);
+
+    function init() {
+        initKeys()
+    }
+
+    function initKeys() {
+        for (var i = 0; i < activeKeyArray.length; i++) {
+            addEventListeners(activeKeyArray[i]);
+        }
+    }
+
+    function addEventListeners(element) {
+        keyNode = document.getElementById(element)
+
+        keyNode.onmouseover = function() {
+            showKeyInfo(element);
+        }
+        keyNode.onmouseleave = function () {
+            removeKeyInfo();
+        }
+    };
+
+    window.addEventListener("keydown", function(event) {
+        let str = "KeyboardEvent: key='" + event.key + "' | code='" +
+                event.code + "'";
+        console.log(str);
+        console.log("KEYDOWN " + str);
+
+        if (allKeyArray.includes(event.code)) {
+            addKeydown(event.code);
+        }
+
+    }, true);
+
+    window.addEventListener("keyup", function(event) {
+        let str = "KeyboardEvent: key='" + event.key + "' | code='" +
+                event.code + "'";
+        console.log("KEYUP " + str);
+
+        if (allKeyArray.includes(event.code)) {
+            removeKeydown(event.code);
+        }
+
+    }, true);
+
+
 
     document.onkeydown = function(e) {
         e = e || window.event;
@@ -432,7 +873,22 @@
             v: 86, w: 87, x: 88, y: 89, z: 90
         };
 
-        switch (input) {
+    }
+
+    function addKeydown(keycode) {
+        var key = document.getElementById(keycode);
+        key.classList.add('keydown');
+    }
+
+    function removeKeydown(keycode) {
+        var key = document.getElementById(keycode);
+        key.classList.remove('keydown')
+    }
+
+
+
+    function keyActions(keycode) {
+        switch (keycode) {
 
             // OTHER CHARS
             case spacebar:
@@ -453,6 +909,8 @@
                 skipTo(0);
                 break;
             case num.one:
+                document.getElementById("one").classList.add('keydown')
+                // document.getElementById("one").classList.remove('keydown')
                 skipTo(1);
                 break;
             case num.two:
@@ -512,21 +970,21 @@
                 showFeedback("m = mute")
                 toggleMute();
                 break;
-            case arrow.up:
+            case plus:
                 volumeUp();
                 break;
-            case arrow.down:
+            case minus:
                 volumeDown();
                 break;
 
 
 
             // QUALITY CONTROL
-            case plus:
+            case arrow.up:
                 qualityUp();
                 break;
 
-            case minus:
+            case arrow.down:
                 qualityDown();
                 break;
 
