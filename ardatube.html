@@ -259,6 +259,12 @@
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+    var sourceURL = "https://www.youtube.com/watch?v=M7lc1UVf-VE";
+    var youtubeSourceTag = "M7lc1UVf-VE";
+    var timeToStart = 0;
+
+
+
     // 3. This function creates an <iframe> (and YouTube player)
     //    after the API code downloads.
     var player;
@@ -313,14 +319,18 @@
         var state = player.getPlayerState();
         console.log(state==1);
         switch (state) {
+            case -1: case 0:
+                showFeedback("play");
+                skipTo(0);
+                break;
             case 1: // playing
-            showFeedback("pause");
-            player.pauseVideo();
-            break;
-            case 2: // paused
-            showFeedback("play");
-            player.playVideo();
-            break;
+                showFeedback("pause");
+                player.pauseVideo();
+                break;
+            case 2: // unstarted, stopped, or paused
+                showFeedback("play");
+                player.playVideo();
+                break;
             default:
         }
     }
@@ -525,9 +535,7 @@
     }
 
     function goToSource() {
-        test = player.a.src;
-        console.log(test);
-        // window.open(test, "_self");
+        window.open(sourceURL, "_self");
     }
 
     // ==== key mappings objects =====
@@ -703,8 +711,8 @@
         "KeyI",
         "KeyO",
         "KeyP",
-        "KeyBracketLeft",
-        "KeyBracketRight",
+        "BracketLeft",
+        "BracketRight",
         "KeyA",
         "KeyS",
         "KeyD",
@@ -827,6 +835,7 @@
                     break;
                 default:
             }
+
             addKeydown(event.code);
             keyAction(event.code);
         }
@@ -849,33 +858,6 @@
     document.onkeydown = function(e) {
         e = e || window.event;
         var input = e.keyCode || e.which;
-
-        var arrow = {
-            left: 37,
-            up: 38,
-            right: 39,
-            down: 40
-        };
-
-        // chars
-        var spacebar = 32;
-        var semicolon = 186;
-        var plus = 187;
-        var minus = 189;
-        var quesslash = 191;
-
-        var num = {
-            zero: 48, one: 49, two: 50, three: 51, four: 52,
-            five: 53, six: 54, seven: 55, eight: 56, nine: 57,
-        };
-
-        var letter = {
-            a: 65, b: 66, c: 67, d: 68, e: 69, f: 70, g: 71,
-            h: 72, i: 73, j: 74, k: 75, l: 76, m: 77, n: 78,
-            o: 79, p: 80, q: 81, r: 82, s: 83, t: 84, u: 85,
-            v: 86, w: 87, x: 88, y: 89, z: 90
-        };
-
     }
 
     function addKeydown(keycode) {
@@ -894,12 +876,16 @@
         switch (keycode) {
 
             // OTHER CHARS
-            case "Q":
+            case "KeyQ":
                 showFeedback("escape");
                 player.stopVideo();
                 break;
             case "Slash": // question
                 // toggle keyboard overlay with help info
+                break;
+
+            case "KeyS": // question
+                goToSource();
                 break;
 
 
