@@ -93,7 +93,7 @@
 <body class="sans-serif bg-near-black h-100 w-100" onload="">
 
 
-    <div class="white banana bg-blue" id="heightRegulator">
+    <div class="white banana" id="heightRegulator">
         <div class="bg-green h4 center" id="widthRegulator">
             <div id="player"></div>
         </div>
@@ -808,6 +808,25 @@
         console.log("KEYDOWN " + str);
 
         if (allKeyArray.includes(event.code)) {
+
+            switch (event.code) {
+                case "ArrowUp":
+                    event.preventDefault();
+                    break;
+                case "ArrowDown":
+                    event.preventDefault();
+                    break;
+                case "ArrowRight":
+                    event.preventDefault();
+                    break;
+                case "ArrowLeft":
+                    event.preventDefault();
+                    break;
+                case "Space":
+                    event.preventDefault();
+                    break;
+                default:
+            }
             addKeydown(event.code);
             keyAction(event.code);
         }
@@ -970,6 +989,7 @@
             case "ArrowDown":
                 qualityDown();
                 break;
+
 
 
             default:
