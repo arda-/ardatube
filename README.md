@@ -5,11 +5,11 @@ Full-width YouTube wrapper with powerful keyboard shortcuts.
 copyright me, please don't take my work and become a millionaire, that would make me bitter.
 
 ## status
-v0.1 – WIP
+v0.1 – WIP totally not dependable for anything. 
 
 ## Tech stack
-- ruby back-end, probably sinatra webserver
-- front end probably vanilla js/css etc.
+- express.js on NPM
+- front end probably vanilla js + tachyons.io
 
 ## roadmap
 ### v0.1: front end
